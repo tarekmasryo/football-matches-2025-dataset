@@ -1,95 +1,58 @@
-# ⚽ Football Matches 2024/2025 (Top 5 Leagues + Champions League)
+# ⚽ Football Matches 2024/2025 (Top Leagues + UCL)
 
-**Author:** [Tarek Masryo](https://github.com/tarekmasryo) · [Kaggle](https://www.kaggle.com/datasets/tarekmasryo/football-matches-20242025-top-5-leagues)  
+Clean match-level dataset: **1,941 matches** across **6 competitions** (Top 5 leagues + Champions League), with FT/HT scores and derived features (goal difference, total goals, outcome, points).
 
----
-
-## TL;DR
-
-> Clean football dataset: **1,941 matches** across **6 competitions**, with detailed scores, referees, teams, and derived features (goal difference, total goals, outcomes, points).  
->  
-> - One CSV (`football_matches_2024_2025.csv`)  
-> - Includes FT/HT breakdowns  
-> - Pre-computed features for direct analysis  
+- **Main file:** `data/football_matches_2024_2025.csv` (1 row per match)
+- **Data dictionary:** `docs/data_dictionary.md`
+- **Example notebook:** `examples/quick_analysis.ipynb`
 
 ---
 
-## Why this dataset exists
-Football data is often scattered across multiple APIs and formats.  
-This dataset provides a **single, analysis-ready CSV** that you can load in seconds to explore team/league performance, simulate tables, or train ML models on match outcomes.
+## 📦 Columns (23)
+
+Competition: `competition_code`, `competition_name`, `season`, `stage`, `matchday`  
+Match: `match_id`, `date_utc`, `status`, `referee`, `referee_id`  
+Teams: `home_team_id`, `home_team`, `away_team_id`, `away_team`  
+Scores: `fulltime_home`, `fulltime_away`, `halftime_home`, `halftime_away`  
+Derived: `goal_difference`, `total_goals`, `match_outcome`, `home_points`, `away_points`
 
 ---
 
-## What’s inside
-**Main file — `football_matches_2024_2025.csv` (1 row per match)**  
-
-**Columns (23):**
-- Competition info: competition_code, competition_name, season, stage, matchday  
-- Match details: match_id, date_utc, status, referee, referee_id  
-- Teams: home_team_id, home_team, away_team_id, away_team  
-- Scores: fulltime_home, fulltime_away, halftime_home, halftime_away  
-- Derived features: goal_difference, total_goals, match_outcome, home_points, away_points  
-
----
-
-## Data Dictionary
-
-| Column            | Description                                       |
-|-------------------|---------------------------------------------------|
-| competition_code  | Short code for competition (e.g., PL, CL)         |
-| competition_name  | Full competition name                             |
-| season            | Season year (2024/2025)                           |
-| stage             | Competition stage (e.g., REGULAR_SEASON, GROUP)   |
-| matchday          | Matchday number                                   |
-| match_id          | Unique match identifier                           |
-| date_utc          | Match date (UTC)                                  |
-| status            | Match status (FINISHED, SCHEDULED, etc.)          |
-| referee           | Referee name                                      |
-| referee_id        | Referee identifier                                |
-| home_team_id      | Home team ID                                      |
-| home_team         | Home team name                                    |
-| away_team_id      | Away team ID                                      |
-| away_team         | Away team name                                    |
-| fulltime_home     | Goals scored by home team (full-time)             |
-| fulltime_away     | Goals scored by away team (full-time)             |
-| halftime_home     | Goals scored by home team (half-time)             |
-| halftime_away     | Goals scored by away team (half-time)             |
-| goal_difference   | Goal difference (home - away)                     |
-| total_goals       | Total goals in match                              |
-| match_outcome     | Outcome (Home Win / Away Win / Draw)              |
-| home_points       | Points for home team (3 win / 1 draw / 0 loss)    |
-| away_points       | Points for away team (3 win / 1 draw / 0 loss)    |
-
----
-
-## Quick start (pandas)
+## 🚀 Quick start (pandas)
 
 ```python
 import pandas as pd
 
-df = pd.read_csv("football_matches_2024_2025.csv")
+df = pd.read_csv("data/football_matches_2024_2025.csv")
 print(df.shape)
-
-# Average goals per match
-avg_goals = df["total_goals"].mean()
-print("Avg goals per match:", round(avg_goals, 2))
-
-# Home win rate
-home_win_rate = (df["match_outcome"] == "Home Win").mean()
-print("Home win rate:", round(home_win_rate, 3))
+print(df[["competition_name", "home_team", "away_team", "fulltime_home", "fulltime_away"]].head())
 ```
 
 ---
 
-## 💡 Use Cases
-- Predict match results or total goals  
-- Build dashboards for league/club performance  
-- Simulate league tables using outcomes and points  
-- Analyze trends: goal averages, draw frequencies, home vs away win rates  
-- Educational projects in **sports analytics** and **machine learning**  
+## ✅ Data quality (reproducible)
+
+```bash
+python scripts/validate_dataset.py
+python scripts/make_checksums.py --check
+```
+
+Generate checksums (after any data update):
+
+```bash
+python scripts/make_checksums.py
+```
 
 ---
 
-## Related Repositories
-- 🔍 [Football Matches EDA](https://github.com/tarekmasryo/football-matches-eda)
-- 📊 [Football Matches Dashboard](https://github.com/tarekmasryo/football-matches-dashboard)
+## 🧾 Source & attribution
+
+Data is collected via **football-data.org**.
+Please include: **"Football data provided by the Football-Data.org API"**.  
+See `football-data.org.txt` for notes.
+
+---
+
+## 📜 License
+
+Repository license: **CC BY 4.0** (see `LICENSE`).
