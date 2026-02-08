@@ -30,7 +30,7 @@ print(df[["competition_name", "home_team", "away_team", "fulltime_home", "fullti
 
 ---
 
-## ✅ Data quality (reproducible)
+## ✅ Data quality
 
 ```bash
 python scripts/validate_dataset.py
